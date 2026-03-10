@@ -1,13 +1,24 @@
 package com.example.member.controller;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.member.dto.MemberDto;
+import com.example.member.service.MemberService;
 import com.example.member.vo.Greeting;
+import com.example.member.vo.RequestMember;
+import com.example.member.vo.ResponseMember;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,12 +29,26 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	private final Environment env;
 	private final Greeting greeting;
+	private final MemberService memberService;
 
 	@GetMapping("/health-check")
 	public String status() {
 		return String.format(
 			"it's Working in Member Service" + ",port(local.server.port)=" + env.getProperty("local.server.port")
 				+ ",port(server.port)=" + env.getProperty("server.port"));
+	}
+
+	@PostMapping("/members")
+	public ResponseEntity<ResponseMember> createMember(@Valid @RequestBody RequestMember member) {
+		ModelMapper mapper = new ModelMapper();
+		mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
+		MemberDto memberDto = mapper.map(member, MemberDto.class);
+		memberService.createMember(memberDto);
+
+		ResponseMember responseMember = mapper.map(memberDto, ResponseMember.class);
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(responseMember);
 	}
 
 	@GetMapping("/welcome")
