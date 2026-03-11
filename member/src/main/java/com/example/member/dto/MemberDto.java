@@ -1,16 +1,14 @@
 package com.example.member.dto;
 
-import java.time.LocalDateTime;
+import com.example.member.jpa.MemberEntity;
 
-import lombok.Data;
+public record MemberDto(
+	 String email,
+	 String name,
+	 String pwd
+) {
 
-@Data
-public class MemberDto {
-	private String email;
-	private String name;
-	private String pwd;
-	private String memberId;
-	private LocalDateTime createdAt;
-
-	private String encryptedPwd;
+	public MemberEntity toMemberEntity(String memberId, String encryptedPwd) {
+		return MemberEntity.create(email, name, memberId, encryptedPwd);
+	}
 }

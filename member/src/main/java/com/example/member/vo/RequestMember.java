@@ -1,6 +1,7 @@
 package com.example.member.vo;
 
-import jakarta.validation.constraints.NotBlank;
+import com.example.member.dto.MemberDto;
+
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -18,4 +19,8 @@ public class RequestMember {
 	@NotNull(message = "Name cannot be null")
 	@Size(min = 2, message = "Name not be less then two characters")
 	private String name;
+
+	public MemberDto toMemberDto() {
+		return new MemberDto(email,name,pwd);
+	}
 }

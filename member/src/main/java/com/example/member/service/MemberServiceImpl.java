@@ -8,6 +8,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.example.member.dto.MemberDto;
+import com.example.member.dto.MemberInfo;
 import com.example.member.jpa.MemberEntity;
 import com.example.member.jpa.MemberRepository;
 
@@ -21,16 +22,12 @@ public class MemberServiceImpl implements MemberService {
 	private final MemberRepository memberRepository;
 
 	@Override
-	public MemberDto createMember(MemberDto memberDto) {
-		memberDto.setMemberId(UUID.randomUUID().toString());
+	public MemberInfo createMember(MemberDto memberDto) {
+		String memberId = UUID.randomUUID().toString();
+		String encryptedPwd = "encrypted_password";
 
-		ModelMapper mapper = new ModelMapper();
-		mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		MemberEntity memberEntity = mapper.map(memberDto, MemberEntity.class);
-		memberEntity.setEncryptedPwd("encrypted_password");
+		MemberEntity member = memberRepository.save(memberDto.toMemberEntity(memberId, encryptedPwd));
 
-		memberRepository.save(memberEntity);
-
-		return mapper.map(memberEntity, MemberDto.class);
+		return MemberInfo.fromEntity(member);
 	}
 }

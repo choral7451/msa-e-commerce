@@ -1,10 +1,15 @@
 package com.example.member.vo;
 
-import lombok.Data;
+import com.example.member.dto.MemberInfo;
 
-@Data
-public class ResponseMember {
-	private String memberId;
-	private String email;
-	private String name;
+public record ResponseMember(
+	String memberId,
+	String email,
+	String name
+) {
+	public static ResponseMember fromInfo(MemberInfo info) {
+		return new ResponseMember(info.memberId(), info.email(), info.name());
+	}
 }
+
+

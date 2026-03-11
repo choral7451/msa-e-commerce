@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.member.dto.MemberDto;
+import com.example.member.dto.MemberInfo;
 import com.example.member.service.MemberService;
 import com.example.member.vo.Greeting;
 import com.example.member.vo.RequestMember;
@@ -39,16 +40,9 @@ public class MemberController {
 	}
 
 	@PostMapping("/members")
-	public ResponseEntity<ResponseMember> createMember(@Valid @RequestBody RequestMember member) {
-		ModelMapper mapper = new ModelMapper();
-		mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-
-		MemberDto memberDto = mapper.map(member, MemberDto.class);
-		memberService.createMember(memberDto);
-
-		ResponseMember responseMember = mapper.map(memberDto, ResponseMember.class);
-
-		return ResponseEntity.status(HttpStatus.CREATED).body(responseMember);
+	public ResponseEntity<ResponseMember> createMember(@Valid @RequestBody RequestMember request) {
+		MemberInfo member = memberService.createMember(request.toMemberDto());
+		return ResponseEntity.status(HttpStatus.CREATED).body(ResponseMember.fromInfo(member));
 	}
 
 	@GetMapping("/welcome")
