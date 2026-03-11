@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.member.dto.MemberDto;
@@ -17,14 +18,14 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
-	Environment env;
 
+	private final BCryptPasswordEncoder passwordEncoder;
 	private final MemberRepository memberRepository;
 
 	@Override
 	public MemberInfo createMember(MemberDto memberDto) {
 		String memberId = UUID.randomUUID().toString();
-		String encryptedPwd = "encrypted_password";
+		String encryptedPwd = passwordEncoder.encode(memberDto.pwd());
 
 		MemberEntity member = memberRepository.save(memberDto.toMemberEntity(memberId, encryptedPwd));
 

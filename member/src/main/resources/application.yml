@@ -19,6 +19,11 @@ spring:
     hibernate:
       ddl-auto: update
 
+  security:
+    user:
+      name: user
+      password: $2a$10$bGY8xctj6sQJLEE60iWdzOSwLVBXqtgyBB7hAlBbNjRmH4S4n4DhW
+
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id}:${random.value}
