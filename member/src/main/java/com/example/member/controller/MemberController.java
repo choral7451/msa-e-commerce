@@ -1,9 +1,13 @@
 package com.example.member.controller;
 
+import java.util.List;
+
 import org.springframework.core.env.Environment;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +38,18 @@ public class MemberController {
 		return String.format(
 			"it's Working in Member Service" + ",port(local.server.port)=" + env.getProperty("local.server.port")
 				+ ",port(server.port)=" + env.getProperty("server.port"));
+	}
+
+	@GetMapping("/members/{memberId}")
+	public ResponseEntity<ResponseMember> getMember(@PathVariable("memberId") String memberId) {
+		MemberInfo member = memberService.getMemberByMemberId(memberId);
+		return ResponseEntity.status(HttpStatus.CREATED).body(ResponseMember.fromInfo(member));
+	}
+
+	@GetMapping("/members")
+	public ResponseEntity<List<ResponseMember>> getMembers() {
+		List<MemberInfo> members = memberService.getAllMembers();
+		return ResponseEntity.status(HttpStatus.CREATED).body(members.stream().map(ResponseMember::fromInfo).toList());
 	}
 
 	@PostMapping("/members")
