@@ -1,7 +1,5 @@
 package com.example.member.controller;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.member.dto.MemberDto;
 import com.example.member.dto.MemberInfo;
 import com.example.member.service.MemberService;
 import com.example.member.vo.Greeting;
@@ -24,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/member-service")
 @RequiredArgsConstructor
 @Slf4j
 public class MemberController {
