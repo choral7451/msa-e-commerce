@@ -34,7 +34,7 @@ public class SecurityConfig {
 		AuthenticationManager authenticationManager = authBuilder.build();
 
 		AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManager, memberServiceImpl, env);
-		authenticationFilter.setFilterProcessesUrl("/member-service/login");
+		authenticationFilter.setFilterProcessesUrl("/login");
 
 		http.csrf(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests(auth -> auth

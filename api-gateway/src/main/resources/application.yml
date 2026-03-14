@@ -21,11 +21,15 @@ spring:
               predicates:
                 - Path=/member-service/members
                 - Method=POST
+              filters:
+                - RewritePath=/member-service/(?<segment>.*), /$\{segment}
             - id: member-service-login
               uri: lb://MEMBER-SERVICE
               predicates:
                 - Path=/member-service/login
                 - Method=POST
+              filters:
+                - RewritePath=/member-service/(?<segment>.*), /$\{segment}
             - id: member-service
               uri: lb://MEMBER-SERVICE
               predicates:
@@ -34,6 +38,7 @@ spring:
               filters:
                 - RemoveRequestHeader=Cookie
                 - RewritePath=/member-service/(?<segment>.*), /$\{segment}
+                - AuthorizationHeaderFilter
             - id: user-service-login
               uri: lb://MEMBER-SERVICE
               predicates:
@@ -47,3 +52,8 @@ spring:
               uri: lb://ORDER-SERVICE
               predicates:
                 - Path=/order-service/**
+              filters:
+                - AuthorizationHeaderFilter
+
+token:
+  secret: my-secret-key-for-jwt-token-that-should-be-long-enough-for-hmac-sha
