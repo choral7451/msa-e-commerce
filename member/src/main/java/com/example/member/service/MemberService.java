@@ -9,4 +9,5 @@ public interface MemberService {
 	MemberInfo createMember(MemberDto memberDto);
 	MemberInfo getMemberByMemberId(String memberId);
 	List<MemberInfo> getAllMembers();
+	MemberInfo getMemberByEmail(String email);
 }

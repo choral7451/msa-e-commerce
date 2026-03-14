@@ -16,10 +16,29 @@ spring:
       server:
         webflux:
           routes:
+            - id: member-service-register
+              uri: lb://MEMBER-SERVICE
+              predicates:
+                - Path=/member-service/members
+                - Method=POST
+            - id: member-service-login
+              uri: lb://MEMBER-SERVICE
+              predicates:
+                - Path=/member-service/login
+                - Method=POST
             - id: member-service
               uri: lb://MEMBER-SERVICE
               predicates:
                 - Path=/member-service/**
+                - Method=GET
+              filters:
+                - RemoveRequestHeader=Cookie
+                - RewritePath=/member-service/(?<segment>.*), /$\{segment}
+            - id: user-service-login
+              uri: lb://MEMBER-SERVICE
+              predicates:
+                - Path=/user-service/login
+                - Method=POST
             - id: catalog-service
               uri: lb://CATALOG-SERVICE
               predicates:

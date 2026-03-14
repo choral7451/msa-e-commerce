@@ -33,5 +33,9 @@ eureka:
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
 
+token:
+  secret: my-secret-key-for-jwt-token-that-should-be-long-enough-for-hmac-sha
+  expiration_time: 86400000
+
 greeting:
   message: Welcome to the Simple E - commerce.
