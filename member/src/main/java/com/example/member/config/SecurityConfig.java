@@ -41,7 +41,7 @@ public class SecurityConfig {
 				.requestMatchers("/h2-console/**").permitAll()
 				.requestMatchers("/**").access(
 					new WebExpressionAuthorizationManager(
-						"hasIpAddress('127.0.0.1') or hasIpAddress('::1') or hasIpAddress('172.16.241.64') or hasIpAddress('::1')"
+						"hasIpAddress('127.0.0.1') or hasIpAddress('::1') or hasIpAddress('172.16.241.64') or hasIpAddress('192.168.219.106')"
 					)
 				)
 				.anyRequest().authenticated()
