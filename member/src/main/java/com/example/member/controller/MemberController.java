@@ -37,7 +37,8 @@ public class MemberController {
 	public String status() {
 		return String.format(
 			"it's Working in Member Service" + ",port(local.server.port)=" + env.getProperty("local.server.port")
-				+ ",port(server.port)=" + env.getProperty("server.port"));
+				+ ",port(server.port)=" + env.getProperty("server.port")
+				+ ",greeting=" + greeting.getMessage());
 	}
 
 	@GetMapping("/members/{memberId}")
