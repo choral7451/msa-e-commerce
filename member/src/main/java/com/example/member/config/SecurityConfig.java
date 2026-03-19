@@ -42,7 +42,7 @@ public class SecurityConfig {
 				.requestMatchers("/actuator/**").permitAll()
 				.requestMatchers("/**").access(
 					new WebExpressionAuthorizationManager(
-						"hasIpAddress('127.0.0.1') or hasIpAddress('::1') or hasIpAddress('172.16.241.64') or hasIpAddress('192.168.219.106')"
+						"hasIpAddress('127.0.0.1') or hasIpAddress('::1') or hasIpAddress('172.16.241.64') or hasIpAddress('192.168.219.0/24')"
 					)
 				)
 				.anyRequest().authenticated()

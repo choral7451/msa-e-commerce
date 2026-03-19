@@ -1,0 +1,2 @@
+token:
+  secret: my-secret-key-for-jwt-token-that-should-be-long-enough-for-hmac-sha

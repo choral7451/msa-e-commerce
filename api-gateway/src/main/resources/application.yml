@@ -55,5 +55,14 @@ spring:
               filters:
                 - AuthorizationHeaderFilter
 
-token:
-  secret: my-secret-key-for-jwt-token-that-should-be-long-enough-for-hmac-sha
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - refresh
+          - health
+          - beans
+          - info
+          - httpexchanges
+

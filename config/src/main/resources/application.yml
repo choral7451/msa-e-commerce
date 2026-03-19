@@ -9,4 +9,4 @@ spring:
       server:
         git: #default
           uri: https://github.com/choral7451/msa-e-commerce.git
-          default-label: ma`in
+          default-label: main
