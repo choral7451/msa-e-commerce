@@ -7,6 +7,10 @@ spring:
   cloud:
     config:
       server:
+#        native:
+#          search-locations:
         git: #default
           uri: https://github.com/choral7451/msa-e-commerce.git
           default-label: main
+#          username: [username] private repo 사용시
+#          password: [password] private repo 사용시
