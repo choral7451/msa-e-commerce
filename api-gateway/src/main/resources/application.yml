@@ -11,7 +11,16 @@ eureka:
 spring:
   application:
     name: api-gateway
+  config:
+    import: "configserver:http://127.0.0.1:8888"
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
   cloud:
+    config:
+      name: api-gateway
     gateway:
       server:
         webflux:
@@ -65,4 +74,5 @@ management:
           - beans
           - info
           - httpexchanges
+          - busrefresh
 
