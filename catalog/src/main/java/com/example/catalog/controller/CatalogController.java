@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.catalog.dto.CatalogInfo;
 import com.example.catalog.service.CatalogService;
+import com.example.catalog.vo.Greeting;
 import com.example.catalog.vo.ResponseCatalog;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class CatalogController {
 
 	private final Environment env;
+	private final Greeting greeting;
 	private final CatalogService catalogService;
 
 	@GetMapping("/health-check")
@@ -28,7 +30,8 @@ public class CatalogController {
 		return String.format(
 			"It's Working in Catalog Service"
 				+ ", port(local.server.port)=" + env.getProperty("local.server.port")
-				+ ", port(server.port)=" + env.getProperty("server.port"));
+				+ ", port(server.port)=" + env.getProperty("server.port")
+				+ ", greeting=" + greeting.getMessage());
 	}
 
 	@GetMapping("/catalogs")
